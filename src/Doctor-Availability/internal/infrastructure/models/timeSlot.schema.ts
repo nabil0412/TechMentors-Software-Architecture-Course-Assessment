@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 export class TimeSlot extends Document {
 
   @Prop({ type: Date, required: true })
-  time: Date;
+  date: Date;
 
   @Prop({ type: String, required: true })
   doctorId: string;
