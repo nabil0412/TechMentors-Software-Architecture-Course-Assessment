@@ -1,4 +1,4 @@
-export class AddTimeSlotPersistance{
+export interface AddTimeSlotPersistance{
     date:Date;
     cost:number;
     doctorName:String;

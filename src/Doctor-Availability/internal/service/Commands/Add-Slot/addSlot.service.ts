@@ -10,6 +10,7 @@ export class AddSlotService {
   constructor(private readonly slotRepository: TimeSlotRepository) {}
 
   async createSlot(command: AddSlotCommand): Promise<void> {
+    
     const slotData: AddTimeSlotPersistance = {
       date: command.date,
       cost: command.cost,

@@ -1,4 +1,4 @@
-export class AddSlotCommand{
+export interface AddSlotCommand{
     date: Date;
     cost:number
 }
