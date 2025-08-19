@@ -10,10 +10,13 @@ export class getAvailableSlotsHandler implements IGetAvailableSlots {
   ) {}
 
   async handle(): Promise<AvailableSlotsResponse> {
-    const queryResult =
-      await this.doctorAvailabilityGateway.getAvailableSlots();
-    return new AvailableSlotsResponse(
-      queryResult
-    );
+    
+    
+    const queryResult =await this.doctorAvailabilityGateway.getAvailableSlots();
+    const queryEntities = queryResult.map(({ slotDate, cost }) => ({
+      date: slotDate,
+      cost,
+    }));
+    return new AvailableSlotsResponse(queryEntities);
   }
 }
