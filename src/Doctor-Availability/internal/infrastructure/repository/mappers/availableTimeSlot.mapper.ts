@@ -9,7 +9,8 @@ export class AvailableTimeSlotMapper {
       slotId:(timeSlot._id as Types.ObjectId),
       slotDate: timeSlot.date,
       cost: timeSlot.cost,
-      isReserved:timeSlot.isReserved
+      isReserved:timeSlot.isReserved,
+      doctorName:timeSlot.doctorName
     };
   }
 

@@ -10,7 +10,7 @@ export class SlotsRepository implements ISlotRepo {
 
     async reserveSlot(slotID:SlotIdDto):Promise<SlotEntity>{
       const slot =  await this.doctorAvailabiltyGateway.reserveSlot(slotID)
-      return SlotEntity.create(slot.slotId,slot.slotDate)
+      return SlotEntity.create(slot.slotId,slot.slotDate,slot.doctorName)
     }
   
 }

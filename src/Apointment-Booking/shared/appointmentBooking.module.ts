@@ -15,9 +15,11 @@ import { ISlotRepo } from '../internal/domain/contracts/ISlotRepo.interface';
 import { SlotsRepository } from '../internal/infrastructure/repository/slots.repo';
 import { AddAppointmentController } from '../internal/presentation/controllers/addAppointment.controller';
 import { addAppointmentService } from '../internal/application/commands/add-appointment/addAppointment.service';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [DoctorAvailabilityModule,
+  CqrsModule,
   MongooseModule.forFeature([
       { name: Appointment.name, schema: AppointmentSchema },
       { name: Patient.name, schema: PatientSchema },

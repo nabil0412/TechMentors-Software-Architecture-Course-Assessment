@@ -25,12 +25,14 @@ export class DoctorAvailabilityFacade implements IDoctorAvailabilityAPI{
         }
 
         if(slot.isReserved === true){
-            throw Error("This slot is already reserved")
+            throw Error("Slot is already booked");
         }
+
         await this.timeSlotRepo.reserveSlot(slot)
 
         return {
             slotId:(slot._id as Types.ObjectId),
+            doctorName:slot.doctorName,
             slotDate:slot.date,
             isReserved:slot.isReserved,
             cost:slot.cost

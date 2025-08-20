@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CqrsModule } from '@nestjs/cqrs';
 import { DoctorAvailabilityFacade } from './internal/infrastructure/facades/doctorAvailability.facade';
 import {
   TimeSlot,
@@ -15,6 +16,7 @@ import { IDoctorAvailabilityAPI } from './shared/contracts/doctorAvailability.fa
 
 @Module({
   imports: [
+    CqrsModule,
     MongooseModule.forFeature([
       { name: TimeSlot.name, schema: timeSlotSchema },
     ]),
