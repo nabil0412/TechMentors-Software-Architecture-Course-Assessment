@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Types } from 'mongoose';
 
 import { TimeSlot } from '../models/timeSlot.schema';
 import { AvailableTimeSlotMapper } from './mappers/availableTimeSlot.mapper';
@@ -44,4 +45,7 @@ export class TimeSlotRepository {
     await this.timeSlotModel.findByIdAndUpdate(slot._id,{isReserved:true})
   }
 
+  async unreserveSlot(slotId : Types.ObjectId){
+    await this.timeSlotModel.findByIdAndUpdate(slotId,{isReserved:false})
+  }
 }

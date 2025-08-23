@@ -6,7 +6,7 @@ export class AppointmentConfirmationRepository {
 
   sendNotificaiton(event) {
     console.log(
-      `📢 Confirmation: Appointment booked for patient ${event.patientName} with ${event.doctorName} on ${event.appointmentDate}`,
+      `📢 Confirmation: Appointment booked for patient ${event.patientName} with ${event.doctorName} on ${event.slotDate}`,
     );
   }
 }

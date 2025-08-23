@@ -1,11 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { IDoctorAvailabilityAPI } from "src/Doctor-Availability/shared/contracts/doctorAvailability.facade.interface";
-import { TimeSlotRepository } from "../repository/timeSlot.repo";
 import { AvailableTimeSlotMapper } from "../repository/mappers/availableTimeSlot.mapper";
+import { TimeSlotRepository } from "../repository/timeSlot.repo";
 
-import { TimeSlotDto } from "src/Doctor-Availability/shared/dtos/AvailableSlot.dto";
 import { Types } from "mongoose";
 import { SlotIdDto } from "src/Apointment-Booking/shared/dtos/slotID.dto";
+import { FreeSlotIdDto } from "src/Apointment-Management/shared/dtos/slotID.dto";
+import { TimeSlotDto } from "src/Doctor-Availability/shared/dtos/AvailableSlot.dto";
 
 @Injectable()
 export class DoctorAvailabilityFacade implements IDoctorAvailabilityAPI{
@@ -37,6 +38,10 @@ export class DoctorAvailabilityFacade implements IDoctorAvailabilityAPI{
             isReserved:slot.isReserved,
             cost:slot.cost
         }
+    }
+
+    async unreserveSlot(slot:FreeSlotIdDto):Promise<void>{
+        this.timeSlotRepo.unreserveSlot(slot.slotId)
     }
 
 }

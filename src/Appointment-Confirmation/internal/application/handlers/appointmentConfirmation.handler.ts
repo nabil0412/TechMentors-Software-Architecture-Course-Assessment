@@ -1,5 +1,5 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { AppointmentEventDto } from 'src/Apointment-Booking/shared/dtos/appointmentEvent.dto';
+import { AppointmentEventDto } from 'src/Apointment-Booking/shared/events/appointment.event';
 import { AppointmentConfirmationRepository } from '../../infrastructure/appointmentConfirmation.repo';
 
 @EventsHandler(AppointmentEventDto)
