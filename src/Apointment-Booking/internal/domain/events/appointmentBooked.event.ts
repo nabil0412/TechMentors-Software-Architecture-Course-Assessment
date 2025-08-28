@@ -1,14 +1,15 @@
 import { IEvent } from '@nestjs/cqrs';
 import { Types } from 'mongoose';
+import { DomainEvent } from 'src/Shared/events/domain.event';
 
-export class AppointmentBookedEvent implements IEvent {
+export class AppointmentBookedEvent extends DomainEvent implements IEvent  {
   private constructor(
-    private readonly apppointmentId: Types.ObjectId,
+    private readonly appointmentId: Types.ObjectId,
     private readonly slotId: Types.ObjectId,
     private readonly slotDate: Date,
     private readonly patientName: String,
     private readonly doctorName: String,
-  ) {}
+  ) {super()}
 
   static create(
     appointmentId:Types.ObjectId,
@@ -20,11 +21,11 @@ export class AppointmentBookedEvent implements IEvent {
     return new AppointmentBookedEvent(appointmentId,slotId,slotDate,patientName, doctorName);
   }
 
-  getAppointmentId(): Types.ObjectId {
-    return this.apppointmentId;
+  public getAppointmentId(): Types.ObjectId {
+    return this.appointmentId;
   }
 
-  getSlotId(): Types.ObjectId {
+  public getSlotId(): Types.ObjectId {
     return this.slotId;
   }
 

@@ -1,7 +1,7 @@
-import {AppointmentEntity } from "../entities/appointment.entity";
+import {Appointment } from "../entities/appointment.entity";
 
 export interface IAppointmentRepo{
-    addAppointment(appointment:AppointmentEntity)
+    addAppointment(appointment:Appointment)
 }
 
 export const IAppointmentRepo =  Symbol("IAppointmentRepo")

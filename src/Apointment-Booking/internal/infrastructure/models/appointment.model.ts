@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 @Schema({ _id: false }) 
-export class Appointment extends Document {
+export class AppointmentModel extends Document {
 
 
   @Prop({ type: Types.ObjectId, required:true })
@@ -21,4 +21,4 @@ export class Appointment extends Document {
   reservedAt: Date;
 }
 
-export const AppointmentSchema = SchemaFactory.createForClass(Appointment);
+export const AppointmentSchema = SchemaFactory.createForClass(AppointmentModel);
