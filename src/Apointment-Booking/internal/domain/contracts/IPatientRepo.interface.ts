@@ -1,4 +1,3 @@
-import {PatientEntity} from "../entities/patient.entity";
 
 export interface IPatientRepo{
    findPatientById(patientID:String)

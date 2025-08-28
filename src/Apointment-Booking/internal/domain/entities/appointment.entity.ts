@@ -1,57 +1,75 @@
 import mongoose, { Types } from 'mongoose';
 import { AppointmentBookedEvent } from '../events/appointmentBooked.event';
-import { PatientEntity } from './patient.entity';
-import { SlotEntity } from './slot.entity';
+import { Patient } from './patient.entity';
+import { Slot } from './slot.entity';
+import { ReservedAt } from '../value-objects/appointment/reservedAt.vo';
+import { AppointmentId } from '../value-objects/appointment/appointmentId.vo';
+import { AggregateRoot } from 'src/Shared/aggregate-root';
 
-export class AppointmentEntity {
-  appointmentId: Types.ObjectId;
-  slot: SlotEntity;
-  patient: PatientEntity;
-  reservedAt: Date;
-  private bookingEvents: AppointmentBookedEvent[] = [];
+export class Appointment extends AggregateRoot {
+  _appointmentId: AppointmentId;
+  _slot: Slot;
+  _patient: Patient;
+  _reservedAt: ReservedAt;
+
+  get appointmentId(): AppointmentId {
+    return this._appointmentId;
+  }
+
+  get slot(): Slot {
+    return this._slot;
+  }
+
+  get patient(): Patient {
+    return this._patient;
+  }
+
+  get reservedAt(): ReservedAt {
+    return this._reservedAt;
+  }
 
   private constructor(
-    appointmentId_: Types.ObjectId,
-    slot_: SlotEntity,
-    patient_: PatientEntity,
-    reservedAt_: Date,
+    appointmentId_: AppointmentId,
+    slot_: Slot,
+    patient_: Patient,
+    reservedAt_: ReservedAt,
   ) {
-    this.appointmentId = appointmentId_;
-    this.slot = slot_;
-    this.patient = patient_;
-    this.reservedAt = reservedAt_;
+    super()
+    this._appointmentId = appointmentId_;
+    this._slot = slot_;
+    this._patient = patient_;
+    this._reservedAt = reservedAt_;
   }
 
   public static create(
-    slot_: SlotEntity,
-    patient_: PatientEntity,
-  ): AppointmentEntity {
-    const appointmentId_ = AppointmentEntity.generateId();
-    const appointment = new AppointmentEntity(
+    slot_: Slot,
+    patient_: Patient,
+  ): Appointment {
+    const appointmentId_ = AppointmentId.create()
+    const reservedAt_ = ReservedAt.create()
+    
+    const appointment = new Appointment(
       appointmentId_,
       slot_,
       patient_,
-      new Date(),
+      reservedAt_,
     );
-    appointment.bookingEvents.push(
+
+
+    appointment.addDomainEvent(
       AppointmentBookedEvent.create(
-        appointmentId_,
-        slot_.slotId,
-        slot_.slotDate,
-        patient_.patientName,
-        slot_.doctorName,
+        appointmentId_.value,
+        slot_.slotId.value,
+        slot_.slotDate.value,
+        patient_.patientName.value,
+        slot_.doctorName.value,
       ),
     );
     return appointment;
   }
 
-  private static generateId(): Types.ObjectId {
-    return new mongoose.Types.ObjectId();
+  public equals(other:Appointment){
+    return (this._appointmentId === other.appointmentId)
   }
 
-  public pullDomainEvents(): AppointmentBookedEvent[] {
-    const events = [...this.bookingEvents];
-    this.bookingEvents = [];
-    return events;
-  }
 }

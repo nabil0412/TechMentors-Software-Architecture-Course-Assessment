@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { IAppointmentRepo } from "src/Apointment-Booking/internal/domain/contracts/IAppointmentRepo.interface";
 import { IPatientRepo } from "src/Apointment-Booking/internal/domain/contracts/IPatientRepo.interface";
-import { AppointmentEntity } from "src/Apointment-Booking/internal/domain/entities/appointment.entity";
+import { Appointment } from "src/Apointment-Booking/internal/domain/entities/appointment.entity";
 import { addAppointmentCommand } from "./addAppointment.command";
 import { ISlotRepo } from "src/Apointment-Booking/internal/domain/contracts/ISlotRepo.interface";
 
@@ -24,7 +24,7 @@ export class addAppointmentService{
 
         
         const slot =  await this.slotRepo.reserveSlot({slotId : command.slotId})
-        const appointment = AppointmentEntity.create(slot,patient)
+        const appointment = Appointment.create(slot,patient)
     
         await this.appointmentRepo.addAppointment(appointment)
     }
